@@ -13,8 +13,16 @@ def conectar():
         password=os.getenv("DB_PASSWORD")
 
     )
+
+    print("Banco conectado:", conexao.info.dbname)
+    print("Usuário:", conexao.info.user)
+
     return conexao
 
+def fechar_conexao(conexao):
+    conexao.close()
+def fechar_cursor(cursor):
+    cursor.close()
 
 def fechar_conexao(conexao):
     conexao.close()
@@ -36,5 +44,16 @@ def exe_cadastro(cursor,entrada_produto, entrada_cod, entrada_valor):
 
 def listar_produtos(cursor):
     cursor.execute(
-        "Select * from estoque"
+        "SELECT * FROM estoque"
     )
+    produtos = cursor.fetchall()
+    return produtos
+
+def buscar_produtos():
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    produtos = listar_produtos(cursor)
+    fechar_cursor(cursor)
+    fechar_conexao(conexao)
+    return produtos

@@ -20,7 +20,7 @@ mensagem = tk.Label(
     text="",
     font=("Arial", 15, "bold")
 )
-mensagem.grid(row=4, column=0, columnspan=2, padx=15, pady=15)
+mensagem.grid(row=7, column=0, columnspan=2, padx=15, pady=15)
 
 #Produto, COD, Valor, Data de Validade (posterior)
 
@@ -78,6 +78,33 @@ botao_cadastrar = tk.Button(
 botao_cadastrar.grid(row=4, column=0, columnspan=2, padx=10, pady=10)
 
 #Mostrar Produtos
+
+def listar():
+     produtos = buscar_produtos()
+     mostrar.delete(0, tk.END)
+
+     for produtos in produtos:
+            mostrar.insert(tk.END, produtos)
+            mensagem.configure(
+                text="Itans do estoque listados"
+            )
+
+
+mostrar = tk.Listbox(
+     janela
+)
+mostrar.grid(row=5, column=0, columnspan=2)
+
+
+botao_mostrar = tk.Button(
+     janela,
+     text="Listar",
+     font=("Arial", 15),
+     command=listar
+)
+botao_mostrar.grid(row=6, column=0, columnspan=2,  padx=10, pady=10)
+
+
 
 janela.mainloop()
 
