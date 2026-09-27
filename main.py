@@ -158,6 +158,7 @@ id_pesquisa = tk.Label(
 )
 id_pesquisa.grid(row=8, column=0, padx=5, pady=5)
 
+
 valor_pesquisa = tk.Label(
      janela,
      text="Valor do Produto",
