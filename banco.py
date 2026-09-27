@@ -13,10 +13,6 @@ def conectar():
         password=os.getenv("DB_PASSWORD")
 
     )
-
-    print("Banco conectado:", conexao.info.dbname)
-    print("Usuário:", conexao.info.user)
-
     return conexao
 
 def fechar_conexao(conexao):
@@ -39,12 +35,12 @@ def cadastrar(entrada_produto, entrada_cod, entrada_valor):
 
 def exe_cadastro(cursor,entrada_produto, entrada_cod, entrada_valor):
     cursor.execute(
-        "insert into estoque (produto, cod_produto, valor) values (%s, %s, %s)", (entrada_produto, entrada_cod, entrada_valor),
+         "insert into estoque (nome_produto, cod_produto, valor) values (%s, %s, %s)", (entrada_produto, entrada_cod, entrada_valor),
     )
 
 def listar_produtos(cursor):
     cursor.execute(
-        "SELECT * FROM estoque"
+        "SELECT cod_produto, nome_produto FROM estoque"
     )
     produtos = cursor.fetchall()
     return produtos
@@ -52,8 +48,34 @@ def listar_produtos(cursor):
 def buscar_produtos():
     conexao = conectar()
     cursor = conexao.cursor()
-
     produtos = listar_produtos(cursor)
     fechar_cursor(cursor)
     fechar_conexao(conexao)
     return produtos
+
+#função de pesquisa por código, valor e nome
+
+def pesquisar(pnome_pesquisa, pid_pesquisa, pvalor_pesquisa):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    if pnome_pesquisa:
+        cursor.execute(
+                "SELECT cod_produto, nome_produto, valor FROM estoque WHERE nome_produto = %s", (pnome_pesquisa,)
+            )
+    elif pid_pesquisa:
+        cursor.execute(
+                "SELECT cod_produto, nome_produto, valor FROM estoque WHERE cod_produto = %s", (pid_pesquisa,)
+            )
+    elif pvalor_pesquisa:
+        cursor.execute(
+                        "SELECT cod_produto, nome_produto, valor FROM estoque WHERE valor = %s", (pvalor_pesquisa,)
+            )
+    
+    produtos = cursor.fetchall()
+
+    fechar_cursor(cursor)
+    fechar_conexao(conexao)
+    
+    return produtos
+    
