@@ -178,7 +178,6 @@ Este projeto foi desenvolvido como prática de:
 
 Projeto desenvolvido para prática e evolução dos conhecimentos em Python, PostgreSQL e desenvolvimento de aplicações desktop.
 
-
 **Contatos**
 E-mail: renermoreiratecnico@gmail.com
 GitHub: renermoreira-git
