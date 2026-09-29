@@ -14,9 +14,22 @@ title = tk.Label(
 )
 title.grid(row=0, column=0, columnspan=2)
 
+#Frames 
+frame_cadastro = tk.LabelFrame(janela, text="Dados do Produto", font=(10))
+frame_cadastro.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
+
+frame_exibir = tk.LabelFrame( janela, text="Mostrar Produtos", font=(5))
+frame_exibir.grid(row=2, column=0,padx=10, pady=10)
+
+frame_pesquisa = tk.LabelFrame(janela, text="Pesquisar Produtos", font=(10))
+frame_pesquisa.grid(row=2, column=1, padx=10, pady=10)
+
+frame_mensagem = tk.LabelFrame(janela, text="Mensagem do Sistema", font="10")
+frame_mensagem.grid(row=3, column=0,padx=20, pady=10, columnspan=2)
+
 #Mensagem
 mensagem = tk.Label(
-    janela,
+    frame_mensagem,
     text="",
     font=("Arial", 15, "bold")
 )
@@ -25,29 +38,29 @@ mensagem.grid(row=11, column=0, columnspan=2, padx=15, pady=15)
 #Produto, COD, Valor, Data de Validade (posterior)
 
 produto = tk.Label(
-    janela,
+    frame_cadastro,
     text="Produto: ",
     font=("Arial", 15)
 )
 produto.grid(row=1, column=0, padx=5, pady=5)
 
 cod_pro = tk.Label(
-    janela, 
+    frame_cadastro, 
     text="Código do Produto:",
     font=("Arial", 15)
 )
 cod_pro.grid(row=2, column=0, padx=5, pady=5)
 
 valor = tk.Label(
-    janela,
+    frame_cadastro,
     text="Valor",
     font=("Arial", 15)
 )
 valor.grid(row=3, column=0, padx=5, pady=5)
 
-entrada_produto = tk.Entry(janela)
-entrada_cod = tk.Entry(janela)
-entrada_valor = tk.Entry(janela)
+entrada_produto = tk.Entry(frame_cadastro)
+entrada_cod = tk.Entry(frame_cadastro)
+entrada_valor = tk.Entry(frame_cadastro)
 
 entrada_produto.grid (row=1, column=1, padx=5, pady=5)
 entrada_cod.grid(row=2, column=1, padx=5, pady=5)
@@ -71,7 +84,7 @@ def cadastrar1():
         mensagem.configure(text="Produto cadastrado com sucesso!!")
 
 botao_cadastrar = tk.Button(
-    janela,
+    frame_cadastro,
     text="Cadastrar",
     font=("Arial", 15),
     command=cadastrar1
@@ -91,19 +104,16 @@ def listar():
             )
 
 
-mostrar = tk.Listbox(
-     janela
-)
-mostrar.grid(row=5, column=0, columnspan=2)
-
+mostrar = tk.Listbox(frame_exibir)
+mostrar.grid(row=5, column=0, columnspan=2, padx=20)
 
 botao_mostrar = tk.Button(
-     janela,
+     frame_exibir,
      text="Listar",
      font=("Arial", 15),
      command=listar
 )
-botao_mostrar.grid(row=6, column=0,padx=5, pady=10)
+botao_mostrar.grid(row=6, column=0)
 
 #Limpar tela
 def limpar():
@@ -118,12 +128,12 @@ def limpar():
     mensagem.configure(text="Tela limpa com sucesso!!")
 
 botao_limpar = tk.Button(
-     janela,
+     frame_exibir,
      text="Limpar",
      font=("Arial", 15),
      command=limpar
 )
-botao_limpar.grid(row=6, column=1,padx=5, pady=10)
+botao_limpar.grid(row=6, column=1)
 
 #Pesquisar produtos
 
@@ -132,60 +142,60 @@ def executar_pesquisa():
      cod1 = pid_pesquisa.get()
      valor1 = pvalor_pesquisa.get()
 
-     produtos = pesquisar(nome1, cod1, valor1)
-     mostrar.delete(0, tk.END)
+     if nome1 != "" or cod1 != "" or valor1 != "":
+        try:
+            produtos = pesquisar(nome1, cod1, valor1)
+            mostrar.delete(0, tk.END)
      
-     for produtos in produtos:
-        mostrar.insert(tk.END, produtos)
-        
-     mensagem.configure(
-           text="Itens do estoque listados"
-        )
+            for produto in produtos:
+                mostrar.insert(tk.END, produto)
+
+            mensagem.configure(text="Itens do estoque listados")
+
+        except psycopg.ProgrammingError:
+            mensagem.configure(text="Erro de Consulta")
+
+     else:
+        mensagem.configure(
+            text="Digite em ao menos um dos campos!"
+            )
      
-
-
 produto_pesquisa = tk.Label(
-     janela,
+     frame_pesquisa,
      text="Nome do Produto",
      font=("Times Roman", 10)
 )
 produto_pesquisa.grid(row=7, column=0, padx=5, pady=5)
 
 id_pesquisa = tk.Label(
-     janela,
+     frame_pesquisa,
      text="Id do Produto",
      font=("Times Roman", 10)
 )
 id_pesquisa.grid(row=8, column=0, padx=5, pady=5)
 
-
 valor_pesquisa = tk.Label(
-     janela,
+     frame_pesquisa,
      text="Valor do Produto",
      font=("Times Roman", 10)
 )
 valor_pesquisa.grid(row=9, column=0, padx=5, pady=5)
 
-pnome_pesquisa = tk.Entry(janela) 
-pid_pesquisa = tk.Entry(janela) 
-pvalor_pesquisa = tk.Entry(janela) 
+pnome_pesquisa = tk.Entry(frame_pesquisa) 
+pid_pesquisa = tk.Entry(frame_pesquisa) 
+pvalor_pesquisa = tk.Entry(frame_pesquisa) 
 
-
-pnome_pesquisa.grid(row=7,column=1)
-pid_pesquisa.grid(row=8,column=1)
-pvalor_pesquisa.grid(row=9,column=1)
+pnome_pesquisa.grid(row=7,column=1, padx=5, pady=10)
+pid_pesquisa.grid(row=8,column=1, padx=5)
+pvalor_pesquisa.grid(row=9,column=1, padx=5, pady=10)
 
 botao_pesquisa = tk.Button(
-     janela,
+     frame_pesquisa,
      text="Pesquisar",
      font=("Arial", 15),
      command=executar_pesquisa
 )
-botao_pesquisa.grid(row=10, column=0, columnspan=2)
+botao_pesquisa.grid(row=10, column=0, columnspan=2, padx=20, pady=20)
 
 
 janela.mainloop()
-
-
-#Proximos Passos: Caixa para mostrar os produtos cadastrados. 
-#Pesquisas por nome produtos, codigo e valor (um dos tres)
