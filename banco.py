@@ -61,7 +61,7 @@ def pesquisar(pnome_pesquisa, pid_pesquisa, pvalor_pesquisa):
 
     if pnome_pesquisa:
         cursor.execute(
-                "SELECT cod_produto, nome_produto, valor FROM estoque WHERE nome_produto = %s", (pnome_pesquisa,)
+                "SELECT cod_produto, nome_produto, valor FROM estoque WHERE nome_produto ILIKE %s", (pnome_pesquisa,)
             )
     elif pid_pesquisa:
         cursor.execute(
@@ -69,7 +69,7 @@ def pesquisar(pnome_pesquisa, pid_pesquisa, pvalor_pesquisa):
             )
     elif pvalor_pesquisa:
         cursor.execute(
-                        "SELECT cod_produto, nome_produto, valor FROM estoque WHERE valor = %s", (pvalor_pesquisa,)
+                "SELECT cod_produto, nome_produto, valor FROM estoque WHERE valor = %s", (pvalor_pesquisa,)
             )
     
     produtos = cursor.fetchall()
@@ -78,4 +78,16 @@ def pesquisar(pnome_pesquisa, pid_pesquisa, pvalor_pesquisa):
     fechar_conexao(conexao)
     
     return produtos
-    
+
+
+def deletar_produto(id):
+    conexao = conectar()
+    cursor = conexao.cursor()
+
+    cursor.execute(
+        "DELETE FROM estoque WHERE cod_produto = %s", (id,)
+    )
+    conexao.commit()
+
+    fechar_cursor(cursor)
+    fechar_conexao(conexao)
