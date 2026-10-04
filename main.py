@@ -1,5 +1,6 @@
 import tkinter as tk
 from banco import *
+from estilos import estilos
 
 janela = tk.Tk()
 
@@ -24,8 +25,11 @@ frame_exibir.grid(row=2, column=0,padx=10, pady=10)
 frame_pesquisa = tk.LabelFrame(janela, text="Pesquisar Produtos", font=(10))
 frame_pesquisa.grid(row=2, column=1, padx=10, pady=10)
 
+frame_excluir = tk.LabelFrame(janela, text="Excluir Produto", font=(10))
+frame_excluir.grid(row=3, column=0,columnspan=2, padx=10, pady=10)
+
 frame_mensagem = tk.LabelFrame(janela, text="Mensagem do Sistema", font="10")
-frame_mensagem.grid(row=3, column=0,padx=20, pady=10, columnspan=2)
+frame_mensagem.grid(row=4, column=0,padx=20, pady=10, columnspan=2)
 
 #Mensagem
 mensagem = tk.Label(
@@ -153,12 +157,13 @@ def executar_pesquisa():
             mensagem.configure(text="Itens do estoque listados")
 
         except psycopg.ProgrammingError:
-            mensagem.configure(text="Erro de Consulta")
+           mensagem.configure(text="Erro de Consulta")
 
      else:
         mensagem.configure(
             text="Digite em ao menos um dos campos!"
             )
+        mostrar.delete(0, tk.END)
      
 produto_pesquisa = tk.Label(
      frame_pesquisa,
@@ -197,5 +202,40 @@ botao_pesquisa = tk.Button(
 )
 botao_pesquisa.grid(row=10, column=0, columnspan=2, padx=20, pady=20)
 
+
+#Excluir Produto
+
+
+def excluir_pro():
+    id_produto = entrada_produto1.get()
+
+    if id_produto == "":
+        mensagem.configure(
+            text="Digite o Código do produto para ser excluído"
+        )
+    else: 
+        id_convert = int(id_produto)
+        deletar_produto(id_convert)
+        mensagem.configure(
+            text="Produto Removido, por favor verifique o estoque novamente"
+        )
+
+id_label = tk.Label(
+    frame_excluir,
+    text="Id do Produto:",
+    font=("Times Roman", 10)
+)
+id_label.grid(row=0, column=0, sticky="ew")
+
+
+entrada_produto1 = tk.Entry(frame_excluir, width=20)
+entrada_produto1.grid(row=1, column=0, padx=20, pady=10)
+
+botao_excluir = tk.Button(
+    frame_excluir,
+    text="Excluir Produto",
+    command=excluir_pro
+) 
+botao_excluir.grid(row=2, column=0, columnspan=2, pady=10, padx=20)
 
 janela.mainloop()
