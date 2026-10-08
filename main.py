@@ -19,16 +19,19 @@ title.grid(row=0, column=0, columnspan=2)
 frame_cadastro = tk.LabelFrame(janela, text="Dados do Produto", font=(10))
 frame_cadastro.grid(row=1, column=0, columnspan=2, padx=10, pady=10)
 
-frame_exibir = tk.LabelFrame( janela, text="Mostrar Produtos", font=(5))
+frame_exibir = tk.LabelFrame( janela, text="Mostrar Produtos", font=(10))
 frame_exibir.grid(row=2, column=0,padx=10, pady=10)
 
 frame_pesquisa = tk.LabelFrame(janela, text="Pesquisar Produtos", font=(10))
 frame_pesquisa.grid(row=2, column=1, padx=10, pady=10)
 
 frame_excluir = tk.LabelFrame(janela, text="Excluir Produto", font=(10))
-frame_excluir.grid(row=3, column=0,columnspan=2, padx=10, pady=10)
+frame_excluir.grid(row=3, column=0, padx=10, pady=10)
 
-frame_mensagem = tk.LabelFrame(janela, text="Mensagem do Sistema", font="10")
+frame_atualizar = tk.LabelFrame(janela, text="Atualizar Produtos",  font=(10))
+frame_atualizar.grid(row=3, column=1,columnspan=2, padx=10, pady=10)
+
+frame_mensagem = tk.LabelFrame(janela, text="Mensagem do Sistema",  font=(10))
 frame_mensagem.grid(row=4, column=0,padx=20, pady=10, columnspan=2)
 
 #Mensagem
@@ -237,5 +240,54 @@ botao_excluir = tk.Button(
     command=excluir_pro
 ) 
 botao_excluir.grid(row=2, column=0, columnspan=2, pady=10, padx=20)
+
+def exe_produto():
+    id_atualizar1 = id_atualizar.get()
+    nome_atualizar1 = nome_atualizar.get()
+    preço_atualizar1 = preço_atualizar.get()
+
+    if id_atualizar1 == "":
+        mensagem.configure("Digite um ID")
+    elif nome_atualizar1 == "":
+        mensagem.configure("Digite um ID")
+    elif preço_atualizar1 == "":
+        mensagem.configure("Digite o Preço novo")
+    else:
+        id_atualizar1 = int(id_atualizar.get())
+        preço_atualizar1 = int(preço_atualizar.get())
+
+        atualizar_produto(id_atualizar1, nome_atualizar1, preço_atualizar1)
+        mensagem.configure(text="Produtos Atualizados com Sucesso!!")
+
+label_atualizar = tk.Label(
+    frame_atualizar,
+    text="Atualizar Produtos",
+    font=("Times Romam", 10)
+)
+label_atualizar.grid(row=0, column=0, padx=5, pady=5)
+
+
+label_id = tk.Label(frame_atualizar, text="Id para Alterar" )
+label_nome = tk.Label(frame_atualizar, text="Nome Atualizado:")
+label_preço = tk.Label(frame_atualizar, text="Preço Atualizado")
+
+label_id.grid(row=1, column=0, padx=5, pady=10)
+label_nome.grid(row=2, column=0, padx=5, pady=10)
+label_preço.grid(row=3, column=0, padx=5, pady=10)
+
+id_atualizar = tk.Entry(frame_atualizar)
+nome_atualizar = tk.Entry(frame_atualizar)
+preço_atualizar = tk.Entry(frame_atualizar)
+
+id_atualizar.grid(row=1, column=1)
+nome_atualizar.grid(row=2, column=1)
+preço_atualizar.grid(row=3, column=1)
+
+botao_atualizar = tk.Button(
+    frame_atualizar, 
+    text="Atualizar Produtos",
+    command=exe_produto
+)
+botao_atualizar.grid(row=4, column=0, columnspan=2, padx=5, pady=10)
 
 janela.mainloop()
