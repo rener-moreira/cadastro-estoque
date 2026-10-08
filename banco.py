@@ -91,3 +91,13 @@ def deletar_produto(id):
 
     fechar_cursor(cursor)
     fechar_conexao(conexao)
+
+
+def atualizar_produto(id_atualizar, nome_atualizar, preço_atualizar):
+    conexao = conectar()
+    cursor = conexao.cursor()
+    cursor.execute("UPDATE estoque SET nome_produto = %s, valor = %s WHERE cod_produto = %s", (nome_atualizar, preço_atualizar,id_atualizar))
+    conexao.commit()
+    fechar_conexao(cursor)
+    fechar_cursor(conexao)
+
