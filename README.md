@@ -180,4 +180,5 @@ Projeto desenvolvido para prática e evolução dos conhecimentos em Python, Pos
 
 **Contatos**
 E-mail: renermoreiratecnico@gmail.com
-GitHub: renermoreira-git
+GitHub: renermoreira
+
