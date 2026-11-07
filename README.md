@@ -176,7 +176,8 @@ Este projeto foi desenvolvido como prática de:
 
 **Rener Moreira**
 
-Projeto desenvolvido para prática e evolução dos conhecimentos em Python, PostgreSQL e desenvolvimento de aplicações desktop.
+Projeto desenvolvido com objetivo de praticar e evoluir conhecimentos em Python, PostgreSQL e desenvolvimento de aplicações desktop.
+Projeto com funcionalidades básicas por tratar-se de um projeto desenvolvido com finalidade puramente acadêmica/estudos
 
 **Contatos**
 E-mail: renermoreiratecnico@gmail.com
